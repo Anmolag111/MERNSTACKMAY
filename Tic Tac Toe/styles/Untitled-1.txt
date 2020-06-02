@@ -1,0 +1,68 @@
+//game GLOBAL constants
+const STARTED = 0;
+const ENDED = 1;
+
+
+//HTML Components
+const playerSpan = document.getElementById('player');
+const gameTable = document.getElementById('gameboard');
+let currentTile;
+
+
+//Global Game Object
+const game = {
+    state: STARTED,
+    moves: 0,
+    turn: 'X'
+}
+//preload game logic
+playerSpan.innerText = game.turn;
+
+
+//Game Logic
+window.addEventListener('load', eventBinds);
+
+function eventBinds() {
+
+    for (var num = 1; num <= 9; num++) {
+        document.getElementById(`btn-${num}`).addEventListener('click', buttonPressed);
+    }
+
+}
+
+function endGame() {
+    for (var num = 1; num <= 9; num++) {
+        currentTile = document.getElementById(`btn-${num}`);
+        currentTile.innerText = "";
+        currentTile.disabled = false;
+        playerSpan.innerText='X';
+        game.moves=0;
+    }
+}
+
+function nextTurn() {
+    game.moves++;
+    if (game.turn === 'X') {
+        game.turn = 'O';
+        playerSpan.innerText = game.turn;
+    } else {
+        game.turn = 'X';
+        playerSpan.innerText = game.turn;
+    }
+
+    if (game.moves === 9) {
+        alert(`Game Over | It's a TIE`);
+        game.state = ENDED;
+        endGame();
+    }
+}
+
+function buttonPressed() {
+    currentTile = this.id;
+    const btn = document.getElementById(currentTile);
+    btn.innerText = game.turn;
+    btn.disabled = true;
+
+    nextTurn();
+
+}
