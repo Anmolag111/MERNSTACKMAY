@@ -1,6 +1,6 @@
 window.addEventListener('load', bindEvents);
-var str = document.querySelector('input');
 
+var str = document.querySelector('input');
 var current = "";
 var operator = [];
 var operand = [];
